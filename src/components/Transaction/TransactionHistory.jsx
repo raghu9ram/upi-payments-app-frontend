@@ -29,23 +29,27 @@ const TransactionHistory = () => {
     }, [user]);
 
     if (!user) {
-        return <div>Please log in to view your transaction history.</div>;
+        return (
+            <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
+                <p className="text-lg font-semibold text-gray-700">Please log in to view your transaction history.</p>
+            </div>
+        );
     }
 
     return (
-        <div>
-            <h1>Transaction History</h1>
-            {loading && <p>Loading...</p>} {/* Display loading message */}
-            {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error message */}
+        <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
+            <h1 className="text-2xl font-bold mb-6">Transaction History</h1>
+            {loading && <p className="text-blue-500">Loading...</p>} {/* Display loading message */}
+            {error && <p className="text-red-500">{error}</p>} {/* Display error message */}
             {transactions.length === 0 && !loading ? (
-                <p>No transactions found.</p>
+                <p className="text-gray-500">No transactions found.</p>
             ) : (
-                <ul>
+                <ul className="space-y-4">
                     {transactions.map((transaction, index) => (
-                        <li key={index}>
-                            <p>Recipient Mobile: {transaction.recipientMobile}</p>
-                            <p>Amount: {transaction.amount}</p>
-                            <p>Date: {new Date(transaction.dateTime[0], transaction.dateTime[1] - 1, transaction.dateTime[2], transaction.dateTime[3], transaction.dateTime[4]).toLocaleString()}</p>
+                        <li key={index} className="p-4 border border-gray-200 rounded-lg shadow-sm">
+                            <p className="text-lg font-medium text-gray-800">Recipient Mobile: <span className="font-normal">{transaction.recipientMobile}</span></p>
+                            <p className="text-lg font-medium text-gray-800">Amount: <span className="font-normal">{transaction.amount}</span></p>
+                            <p className="text-lg font-medium text-gray-800">Date: <span className="font-normal">{new Date(transaction.dateTime[0], transaction.dateTime[1] - 1, transaction.dateTime[2], transaction.dateTime[3], transaction.dateTime[4]).toLocaleString()}</span></p>
                         </li>
                     ))}
                 </ul>

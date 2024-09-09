@@ -31,33 +31,54 @@ const UserBanks = () => {
     }, [user]);
 
     if (!user) {
-        return <div>Please log in to view your bank details.</div>;
+        return (
+            <div className="flex items-center justify-center h-screen">
+                <p className="text-lg text-gray-700">Please log in to view your bank details.</p>
+            </div>
+        );
     }
 
     return (
-        <div>
-            <h1>Your Banks</h1>
-            <p>User ID: {user.id}</p>
-            {loading && <p>Loading...</p>}
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+        <div className="p-6">
+            <h1 className="text-2xl font-bold mb-4">My Banks</h1>
+            {/* <p className="text-gray-600 mb-4">User ID: <span className="font-semibold">{user.id}</span></p> */}
+            {loading && <p className="text-blue-500">Loading...</p>}
+            {error && <p className="text-red-500">{error}</p>}
             {banks.length === 0 ? (
-                !loading && <p>No banks found.</p>
+                !loading && <p className="text-gray-500">No banks found.</p>
             ) : (
-                <ul>
+                <ul className="space-y-4">
                     {banks.map((bank, index) => (
-                        <li key={index}>
-                            <h2>{bank.bankName}</h2>
-                            <p>Account Number: {bank.accountNumber}</p>
-                            <p>Bank PIN: {bank.bankPin}</p>
-                            <p>Transaction Limit: {bank.transactionLimit}</p>
-                            <p>Balance: {bank.balance}</p>
+                        <li key={index} className="border border-gray-300 p-4 rounded-lg shadow-sm">
+                            <h2 className="text-xl font-semibold mb-2">{bank.bankName}</h2>
+                            <p className="text-gray-700">Account Number: <span className="font-medium">{bank.accountNumber}</span></p>
+                            <p className="text-gray-700">Bank PIN: <span className="font-medium">{bank.bankPin}</span></p>
+                            <p className="text-gray-700">Transaction Limit: <span className="font-medium">{bank.transactionLimit}</span></p>
+                            <p className="text-gray-700">Balance: <span className="font-medium">{bank.balance}</span></p>
                         </li>
                     ))}
                 </ul>
             )}
-            <button onClick={() => navigate('/addNewBank')}>Add New Bank</button>
-            <Link to="/transactionHistory">View Transaction History</Link>
-            <button onClick={() => navigate('/newPayment')}>New Payment</button>
+            <div className="mt-6 flex space-x-4">
+                <button 
+                    onClick={() => navigate('/addNewBank')} 
+                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                >
+                    Add New Bank
+                </button>
+                <Link 
+                    to="/transactionHistory" 
+                    className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+                >
+                    View Transaction History
+                </Link>
+                <button 
+                    onClick={() => navigate('/newPayment')} 
+                    className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                >
+                    New Payment
+                </button>
+            </div>
         </div>
     );
 };

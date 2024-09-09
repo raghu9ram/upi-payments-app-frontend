@@ -31,38 +31,47 @@ const UserLogin = () => {
     };
 
     return (
-        <div>
-            <h1>Login as an Existing User</h1>
-            <form onSubmit={handleUserLogin}>
-                <div>
-                    <label>
-                        Mobile Number:
+        <div className="flex items-center justify-center min-h-screen bg-gray-100">
+            <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
+                <h1 className="text-2xl font-semibold mb-6 text-gray-800">Login as an Existing User</h1>
+                <form onSubmit={handleUserLogin} className="space-y-4">
+                    <div className="flex flex-col">
+                        <label htmlFor="mobileNumber" className="mb-2 text-gray-700">Mobile Number</label>
                         <input
-                            type="number"
+                            id="mobileNumber"
+                            type="text"
                             value={mobileNumber}
                             onChange={(e) => setMobileNumber(e.target.value)}
-                            required 
+                            required
+                            className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        6 Digit Pin:
+                    </div>
+                    <div className="flex flex-col">
+                        <label htmlFor="userPin" className="mb-2 text-gray-700">6 Digit Pin</label>
                         <input
-                            type="number"
+                            id="userPin"
+                            type="password"
                             value={userPin}
                             onChange={(e) => setUserPin(e.target.value)}
                             required
+                            className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
-                    </label>
-                </div>
-                <button type='submit'>Login</button>
-            </form>
-            {error && <p>Error: {error.message}</p>}
-            <p>Don't have an Account? <a href="/register">Register Here</a></p>
+                    </div>
+                    <button
+                        type="submit"
+                        className="w-full py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                        Login
+                    </button>
+                </form>
+                {error && <p className="mt-4 text-red-500">Error: {error.message}</p>}
+                <p className="mt-6 text-center">
+                    Don't have an Account?{' '}
+                    <a href="/register" className="text-blue-500 hover:underline">Register Here</a>
+                </p>
+            </div>
         </div>
     );
 };
 
 export default UserLogin;
-

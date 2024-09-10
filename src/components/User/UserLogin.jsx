@@ -54,12 +54,12 @@ const UserLogin = () => {
                             value={userPin}
                             onChange={(e) => setUserPin(e.target.value)}
                             required
-                            className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         />
                     </div>
                     <button
                         type="submit"
-                        className="w-full py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full py-3 text-indigo-600 text-w-full py-2 px-4 bg-indigo-600 text-white font-bold rounded-md shadow-sm hover:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                         Login
                     </button>
@@ -67,7 +67,7 @@ const UserLogin = () => {
                 {error && <p className="mt-4 text-red-500">Error: {error.message}</p>}
                 <p className="mt-6 text-center">
                     Don't have an Account?{' '}
-                    <a href="/register" className="text-blue-500 hover:underline">Register Here</a>
+                    <a href="/register" className="text-indigo-600 hover:underline">Register Here</a>
                 </p>
             </div>
         </div>

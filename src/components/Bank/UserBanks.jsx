@@ -8,6 +8,9 @@ const UserBanks = () => {
     const [banks, setBanks] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [pinInputs, setPinInputs] = useState({});
+    const [pinValidationError, setPinValidationError] = useState({});
+    const [showBalance, setShowBalance] = useState({});
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -30,6 +33,23 @@ const UserBanks = () => {
         }
     }, [user]);
 
+    const handlePinInputChange = (bankId, value) => {
+        setPinInputs(prev => ({ ...prev, [bankId]: value }));
+    };
+
+    const handlePinSubmit = (bankId, bankPin) => {
+        const enteredPin = (pinInputs[bankId] || '').trim();
+        const actualPin = String(bankPin).trim();
+
+        if (enteredPin === actualPin) {
+            setShowBalance(prev => ({ ...prev, [bankId]: true }));
+            setPinValidationError(prev => ({ ...prev, [bankId]: '' }));
+        } else {
+            setPinValidationError(prev => ({ ...prev, [bankId]: 'Incorrect PIN' }));
+            setShowBalance(prev => ({ ...prev, [bankId]: false }));
+        }
+    };
+
     if (!user) {
         return (
             <div className="flex items-center justify-center h-screen">
@@ -41,20 +61,39 @@ const UserBanks = () => {
     return (
         <div className="p-6">
             <h1 className="text-2xl font-bold mb-4">My Banks</h1>
-            {/* <p className="text-gray-600 mb-4">User ID: <span className="font-semibold">{user.id}</span></p> */}
             {loading && <p className="text-blue-500">Loading...</p>}
             {error && <p className="text-red-500">{error}</p>}
             {banks.length === 0 ? (
                 !loading && <p className="text-gray-500">No banks found.</p>
             ) : (
                 <ul className="space-y-4">
-                    {banks.map((bank, index) => (
-                        <li key={index} className="border border-gray-300 p-4 rounded-lg shadow-sm">
+                    {banks.map((bank) => (
+                        <li key={bank.id} className="border border-gray-300 p-4 rounded-lg shadow-sm">
                             <h2 className="text-xl font-semibold mb-2">{bank.bankName}</h2>
                             <p className="text-gray-700">Account Number: <span className="font-medium">{bank.accountNumber}</span></p>
-                            <p className="text-gray-700">Bank PIN: <span className="font-medium">{bank.bankPin}</span></p>
                             <p className="text-gray-700">Transaction Limit: <span className="font-medium">{bank.transactionLimit}</span></p>
-                            <p className="text-gray-700">Balance: <span className="font-medium">{bank.balance}</span></p>
+                            {showBalance[bank.id] ? (
+                                <p className="text-gray-700">Balance: <span className="font-medium">{bank.balance}</span></p>
+                            ) : (
+                                <div className="mt-4">
+                                    <input
+                                        type="password"
+                                        placeholder="Enter Bank PIN to view balance"
+                                        value={pinInputs[bank.id] || ''}
+                                        onChange={(e) => handlePinInputChange(bank.id, e.target.value)}
+                                        className="p-2 border border-gray-300 rounded-md"
+                                    />
+                                    <button
+                                        onClick={() => handlePinSubmit(bank.id, bank.bankPin)}
+                                        className="ml-2 bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
+                                    >
+                                        Submit PIN
+                                    </button>
+                                    {pinValidationError[bank.id] && (
+                                        <p className="text-red-500 mt-2">{pinValidationError[bank.id]}</p>
+                                    )}
+                                </div>
+                            )}
                         </li>
                     ))}
                 </ul>

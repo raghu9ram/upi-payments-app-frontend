@@ -120,8 +120,8 @@ const TransactionStart = () => {
 
     return (
         <div className="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
-            <h1 className="text-2xl font-bold mb-6">Initialize Transaction</h1>
-            {loading && <p className="text-blue-500 mb-4">Loading...</p>} {/* Display loading indicator */}
+            <h1 className="text-2xl font-bold mb-6">Initialise Transaction</h1>
+            {loading && <p className="text-blue-500 mb-4">Loading...</p>} 
             <form onSubmit={handleTransactionSubmit} className="space-y-4">
                 <div>
                     <label className="block text-sm font-medium text-gray-700">
